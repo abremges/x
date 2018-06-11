@@ -20,7 +20,7 @@ process bowtie2_build {
     file assembly
 
     output:
-    file "${assembly}.*.bt2" into bowtie2_index
+    set ${assembly}, "${assembly}.*.bt2" into bowtie2_index
 
     """
     bowtie2-build ${assembly} ${assembly}
@@ -32,7 +32,7 @@ process bowtie2 {
     publishDir = "bowtie2"
 
     input:
-    file index from bowtie2_index
+    set val(index_name), file(index) from bowtie2_index
     set val(id), file(forward), file(reverse) from bowtie2_reads
 
     output:
@@ -40,7 +40,7 @@ process bowtie2 {
     file "${id}.depth"
 
     """
-    bowtie2 -x ${index} -1 ${forward} -2 ${reverse} | samtools sort -f - ${id}.bam
+    bowtie2 -x ${index_name} -1 ${forward} -2 ${reverse} | samtools sort -f - ${id}.bam
     jgi_summarize_bam_contig_depths --noIntraDepthVariance --includeEdgeBases ${id}.bam > ${id}.depth
     """
 }
