@@ -20,7 +20,7 @@ process bowtie2_build {
     file assembly
 
     output:
-    set ${assembly}, "${assembly}.*.bt2" into bowtie2_index
+    set "${assembly}", "${assembly}.*.bt2" into bowtie2_index
 
     """
     bowtie2-build ${assembly} ${assembly}
