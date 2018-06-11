@@ -29,7 +29,7 @@ process bowtie2_build {
 
 process bowtie2 {
     tag "${id}"
-    publishDir = "bowtie2/${id}"
+    publishDir = "bowtie2"
 
     input:
     file index from bowtie2_index
