@@ -5,13 +5,14 @@ assembly = file(params.assembly)
 
 params.reads = "fastq"
 Channel
-    .fromFilePairs("${params.reads}/*__R{1,2}.fastq")
+    .fromFilePairs("${params.reads}/*__R{1,2}.fastq", flat: true)
     .ifEmpty { error "Cannot find any reads matching: ${params.pairs}" }
     .into {
+        input_reads;
         bowtie2_reads;
         kallisto_reads
     }
-
+input_reads.println()
 
 process bowtie2_build {
     publishDir = "bowtie2"
