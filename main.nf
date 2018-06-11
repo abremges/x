@@ -14,6 +14,7 @@ Channel
     }
 input_reads.println()
 
+
 process bowtie2_build {
     publishDir = "bowtie2"
 
@@ -41,7 +42,7 @@ process bowtie2 {
     file "${id}.depth"
 
     """
-    bowtie2 -x ${index_name} -1 ${forward} -2 ${reverse} | samtools sort -f - ${id}.bam
+    bowtie2 -x ${index_name} -1 ${forward} -2 ${reverse} | samtools view -bSu - | samtools sort -f - ${id}.bam
     jgi_summarize_bam_contig_depths --noIntraDepthVariance --includeEdgeBases ${id}.bam > ${id}.depth
     """
 }
