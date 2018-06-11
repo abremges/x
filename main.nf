@@ -76,7 +76,7 @@ process kallisto_quant {
     file "${id}/run_info.json"
 
     """
-    kallisto quant -i ${index} -o ${id} -b 100 ${forward} ${reverse}
+    kallisto quant -i ${index} -o ${id} ${forward} ${reverse}
     """
 }
 
