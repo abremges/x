@@ -32,7 +32,7 @@ process bowtie2 {
     publishDir = "bowtie2"
 
     input:
-    set val(index_name), file(index) from bowtie2_index
+    set file(index_name), file(index) from bowtie2_index
     set val(id), file(forward), file(reverse) from bowtie2_reads
 
     output:
