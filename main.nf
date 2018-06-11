@@ -43,7 +43,7 @@ process bowtie2 {
 
     """
     bowtie2 -x ${index_name} -1 ${forward} -2 ${reverse} | samtools view -bSu - | samtools sort -f - ${id}.bam
-    jgi_summarize_bam_contig_depths --noIntraDepthVariance --includeEdgeBases ${id}.bam > ${id}.depth
+    jgi_summarize_bam_contig_depths --noIntraDepthVariance --includeEdgeBases --outputDepth ${id}.depth ${id}.bam
     """
 }
 
