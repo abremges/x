@@ -33,7 +33,7 @@ process bowtie2 {
 
     input:
     file index from bowtie2_index
-    set id, file(forward), file(reverse) from bowtie2_reads
+    set val(id), file(forward), file(reverse) from bowtie2_reads
 
     output:
     file "${id}.bam"
@@ -66,7 +66,7 @@ process kallisto_quant {
 
     input:
     file index from kallisto_index
-    set id, file(forward), file(reverse) from kallisto_reads
+    set val(id), file(forward), file(reverse) from kallisto_reads
 
     output:
     file "${id}/abundance.h5"
