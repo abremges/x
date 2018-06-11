@@ -38,12 +38,25 @@ process bowtie2 {
     set val(id), file(forward), file(reverse) from bowtie2_reads
 
     output:
-    file "${id}.bam"
-    file "${id}.depth"
+    set id, "${id}.bam" into bowtie2_bam
 
     """
     bowtie2 -x ${index_name} -1 ${forward} -2 ${reverse} | samtools view -bSu - | samtools sort -f - ${id}.bam
-    jgi_summarize_bam_contig_depths --noIntraDepthVariance --includeEdgeBases --outputDepth ${id}.depth ${id}.bam
+    """
+}
+
+process jgi_summarize_bam_contig_depths {
+    tag "${id}"
+    publishDir = "bowtie2"
+
+    input:
+    set val(id), file(bam) from bowtie2_bam
+
+    output:
+    set id, "${id}.depth"
+
+    """
+    jgi_summarize_bam_contig_depths --noIntraDepthVariance --includeEdgeBases --outputDepth ${id}.depth ${bam}
     """
 }
 
