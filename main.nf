@@ -41,7 +41,7 @@ process bowtie2 {
     set id, "${id}.bam" into bowtie2_bam
 
     """
-    bowtie2 -x ${index_name} -1 ${forward} -2 ${reverse} | samtools view -bSu - | samtools sort -f - ${id}.bam
+    bowtie2 -x ${index_name} -1 ${forward} -2 ${reverse} | samtools view -bSu - | samtools sort - ${id}
     """
 }
 
