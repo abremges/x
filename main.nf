@@ -63,6 +63,7 @@ process jgi_summarize_bam_contig_depths {
 
 process kallisto_index {
     publishDir = "kallisto"
+    memory '500 GB'
 
     input:
     file assembly
@@ -78,6 +79,8 @@ process kallisto_index {
 process kallisto_quant {
     tag "${id}"
     publishDir = "kallisto"
+    cpus = 8
+    memory '10 GB'
 
     input:
     file index from kallisto_index
@@ -89,7 +92,7 @@ process kallisto_quant {
     file "${id}/run_info.json"
 
     """
-    kallisto quant -i ${index} -o ${id} ${forward} ${reverse}
+    kallisto quant -t ${task.cpus} -i ${index} -o ${id} ${forward} ${reverse}
     """
 }
 
